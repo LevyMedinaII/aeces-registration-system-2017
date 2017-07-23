@@ -4,10 +4,9 @@ require('dotenv').config()
 var database = process.env.DATABASE
 var username = process.env.USER
 var password = process.env.PASSWORD
-var db_port = 5433
-var db_url = 'localhost'
+var db_port = process.env.DB_PORT
 
-const sequelize = new Sequelize(`postgres://${username}:${password}@${db_url}:${db_port}/${database}`);
+const sequelize = new Sequelize(`postgres://${username}:${password}@localhost:${db_port}/${database}`);
 sequelize.authenticate()
     .then(() => {
         console.log('Connection has been established successfully.')
