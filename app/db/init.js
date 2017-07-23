@@ -8,7 +8,6 @@ var db_port = 5433
 var db_url = 'localhost'
 
 const sequelize = new Sequelize(`postgres://${username}:${password}@${db_url}:${db_port}/${database}`);
-
 sequelize.authenticate()
     .then(() => {
         console.log('Connection has been established successfully.')
@@ -21,7 +20,7 @@ const Sample = sequelize.define('sample', {
     name: Sequelize.STRING
 })
 
-Sample.sync().then(() => {}).catch((err) =>  { console.log(err); })
+Sample.sync().then(()=>{}).catch((err)=>{console.log(err)})
 
 module.exports = (sequelize, DataTypes) => {
     return {
