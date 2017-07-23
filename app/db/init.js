@@ -16,10 +16,12 @@ sequelize.authenticate()
         console.error('Unable to connect to the database:', err)
     })
 
+//TABLE DEFINITIONS
 const Sample = sequelize.define('sample', {
     name: Sequelize.STRING
 })
 
+//TABLE CREATION
 Sample.sync().then(()=>{}).catch((err)=>{console.log(err)})
 
 module.exports = (sequelize, DataTypes) => {
