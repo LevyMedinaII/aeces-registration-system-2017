@@ -2,6 +2,7 @@
 Backend server for the AECES Registration System
 
 ## Packages List:
+### Run **npm install** to install the packages
 1. nodemon
 ..* Used for speeding up development
 2. localtunnel
