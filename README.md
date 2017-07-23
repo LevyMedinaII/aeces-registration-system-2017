@@ -23,6 +23,10 @@ Backend server for the AECES Registration System
 	* Used for running the server and routing
 4. dotenv
 	* Used for managing the environment of the application
+5. sequelize
+	* Database ORM
+6. bodyParser
+	* for parsing request bodies with express
 
 ## Some Files Details
 1. .gitignore
