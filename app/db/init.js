@@ -23,3 +23,8 @@ sequelize.authenticate()
   .catch(err => {
     console.error('Unable to connect to the database:', err);
   });
+
+/*
+    * File for creating the database and connecting to it
+    * Uses sequelize ORM module for more secure and easier database access
+*/
