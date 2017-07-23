@@ -1,12 +1,12 @@
-var Sequelize = require('sequelize');
-require('dotenv').config();
+var Sequelize = require('sequelize')
+require('dotenv').config()
 
 var database = process.env.DATABASE
 var username = process.env.USER
 var password = process.env.PASSWORD
 var db_port = process.env.DB_PORT
 
-const sequelize = new Sequelize(`postgres://${username}:${password}@localhost:${db_port}/${database}`);
+const sequelize = new Sequelize(`postgres://${username}:${password}@localhost:${db_port}/${database}`)
 
 sequelize.authenticate()
     .then(() => {
@@ -25,10 +25,92 @@ module.exports = {
 	get_sample: () => {
 		return Models.Sample.findAll()
 			.then(res => {
-				return res;
+				return res
 			})
 			.catch(err => {
-				return err;
+				return err
+			})
+	},
+
+	add: (id_number, first_name, last_name, year, course, block, is_new_member, id_pic_link, mobile_number, email, interview_sched) => {
+		return Models.Applicants.create({
+			id_number,
+			first_name,
+			last_name,
+			year,
+			course,
+			block,
+			is_new_member,
+			id_pic_link,
+			mobile_number,
+			email,
+			interview_sched
+		})
+			.then(res => {
+				return res
+			})
+			.catch(err => {
+				return err
+			})
+	},
+	get_all: () => {
+		return Models.Applicants.findAll()
+			.then(res => {
+				return res
+			})
+			.catch(err => {
+				return err
+			})
+	},
+	get: (id) => {
+		return Models.Applicants.find({ where: {id} })
+			.then(res => {
+				return res
+			})
+			.catch(err => {
+				return err
+			})
+	},
+	update: (id, id_number, first_name, last_name, year, course, block, is_new_member, id_pic_link, mobile_number, email, interview_sched) => {
+		return Models.Applicants.find({ where: {id} })
+			.then(applicant => {
+				applicant.updateAttributes({
+					id_number, 
+					first_name, 
+					last_name, 
+					year, 
+					course, 
+					block, 
+					is_new_member, 
+					id_pic_link, 
+					mobile_number, 
+					email, 
+					interview_sched
+				})
+					.then(res => {
+						return 'Update successful'
+					})
+					.catch(err => {
+						return err
+					})
+			})
+			.catch(err => {
+				return err
+			})
+	},
+	delete: (id) => {
+		return Models.Applicants.find({ where: {id} })
+			.then(applicant => {
+				applicant.destroy()
+					.then(res => {
+						return res
+					})
+					.catch(err => {
+						return err
+					})
+			})
+			.catch(err => {
+				return err
 			})
 	}
 }

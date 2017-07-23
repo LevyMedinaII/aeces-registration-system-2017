@@ -19,13 +19,60 @@ sequelize.authenticate()
 const Sample = sequelize.define('sample', {
     name: Sequelize.STRING
 })
+const Applicants = sequelize.define('applicants', {
+    id_number: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true
+    },
+    first_name: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    last_name: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    year: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    course: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    block: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    is_new_member: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    id_pic_link: {
+        type: Sequelize.STRING,
+        unique: true
+    },
+    mobile_number: {
+        type: Sequelize.STRING,
+        unique: true,
+        allowNull: false
+    },
+    email: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    interview_sched: Sequelize.STRING
+})
 
 //TABLE CREATION
-Sample.sync().then(()=>{}).catch((err)=>{console.log(err)})
+Sample                  .sync().then(()=>{}).catch((err)=>{console.log(err)})
+Applicants              .sync().then(()=>{}).catch((err)=>{console.log(err)})
 
 module.exports = (sequelize, DataTypes) => {
     return {
-        Sample
+        Sample, 
+        Applicants
     }
 }
 

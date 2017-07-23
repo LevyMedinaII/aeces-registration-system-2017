@@ -18,6 +18,81 @@ router.get('/db/test', (req, res) => {
 		})
 })
 
+router.get('/', (req, res) => {
+	service.get_all()
+		.then(applicants => {
+			res.send(applicants)
+		})
+		.catch(err => {
+			res.send(err)
+		})
+})
+
+router.get('/:id', (req, res) => {
+	service.get(req.params.id)
+		.then(applicant => {
+			res.send(applicant)
+		})
+		.catch(err => {
+			res.send(err)
+		})
+})
+
+router.post('/', (req, res) => {
+	service.add(
+		req.body.id_number,
+		req.body.first_name,
+		req.body.last_name,
+		req.body.year,
+		req.body.course,
+		req.body.block,
+		req.body.is_new_member,
+		req.body.id_pic_link,
+		req.body.mobile_number,
+		req.body.email,
+		req.body.interview_sched
+	)
+		.then(add_res => {
+			res.send(add_res)
+		})
+		.catch(err => {
+			res.send(err)
+		})
+})
+
+router.put('/:id', (req, res) => {
+	service.update(
+		req.params.id,
+		req.body.id_number,
+		req.body.first_name,
+		req.body.last_name,
+		req.body.year,
+		req.body.course,
+		req.body.block,
+		req.body.is_new_member,
+		req.body.id_pic_link,
+		req.body.mobile_number,
+		req.body.email,
+		req.body.interview_sched
+	)
+		.then(update_res => {
+			res.send(update_res)
+		})
+		.catch(err => {
+			res.send(err)
+		})
+})
+
+router.delete('/:id', (req, res) => {
+	service.delete(req.params.id)
+		.then(delete_res => {
+			res.send(delete_res)
+		})
+		.catch(err => {
+			res.send(err)
+		})
+})
+
 module.exports = router
 
 /*
@@ -38,7 +113,7 @@ module.exports = router
  	*	EXAMPLES:
  	*		GET /users/				-->		Returns a list of all the users
  	*		GET /users/:id 			-->		Returns the user with the given id
- 	*		ADD /users				-->		Adds a user
+ 	*		POST /users				-->		Adds a user
  	*		PUT /users/:id 			-->		Updates the user with the given id
  	*		DELETE /users/:id 		-->		Deletes the user with the given id
 */

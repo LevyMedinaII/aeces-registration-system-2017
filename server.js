@@ -1,13 +1,14 @@
 //PACKAGES
 var express = require('express')
 var localtunnel = require('localtunnel')
+var bodyParser = require('body-parser')
 
-//VARIABLES AND PARAMETERS
+//VARIABLES AND INSTANTIATIONS
 const port = 5000
 
 var app = express()
-var users = require('./app/users/index.js')
-var db_init = require('./app/db/init.js')
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 
 var tunnel = localtunnel(port, {subdomain: 'levylocal'}, (err, tunnel) => {
 	if(err) {
@@ -19,8 +20,11 @@ var tunnel = localtunnel(port, {subdomain: 'levylocal'}, (err, tunnel) => {
 
 
 //APP Imports
-app.use('/users', users);
+var users = require('./app/users/index.js')
+var db_init = require('./app/db/init.js')
+
 require('./app/db/init');
+app.use('/users', users);
 
 //MISC
 app.listen(port);
