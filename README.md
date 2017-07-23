@@ -1,5 +1,5 @@
-# express-server-boiletplate
-Template for express applications
+# AECES Registration System 2017 Server
+Backend server for the AECES Registration System
 
 ## Packages List:
 1. nodemon
