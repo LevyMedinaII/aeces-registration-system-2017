@@ -7,6 +7,7 @@ const port = 5000
 
 var app = express()
 var users = require('./app/users/index.js')
+var db_init = require('./app/db/init.js')
 
 var tunnel = localtunnel(port, {subdomain: 'levylocal'}, (err, tunnel) => {
 	if(err) {
@@ -19,6 +20,7 @@ var tunnel = localtunnel(port, {subdomain: 'levylocal'}, (err, tunnel) => {
 
 //APP Imports
 app.use('/users', users);
+// app.use('/db', db_init);
 
 //MISC
 app.listen(port);

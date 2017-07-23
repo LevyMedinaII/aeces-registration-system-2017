@@ -1,9 +1,10 @@
 var router = require('express').Router()
 var service = require('./user.service')
+var Sequelize = require('sequelize')
 
 //PATH localhost:<port>/users/test
 router.get('/test', (request, response) => {
-	response.send('Hello World')
+	response.send(service.test());
 })
 
 module.exports = router
