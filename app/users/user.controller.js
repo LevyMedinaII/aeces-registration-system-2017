@@ -3,8 +3,19 @@ var service = require('./user.service')
 var Sequelize = require('sequelize')
 
 //PATH localhost:<port>/users/test
-router.get('/test', (request, response) => {
-	response.send(service.test());
+router.get('/test', (req, res) => {
+	res.send(service.test());
+})
+
+//Add an entry to the sample table to test this out
+router.get('/db/test', (req, res) => {
+	service.get_sample()
+		.then(samples => {
+			res.send(samples)
+		})
+		.catch(err => {
+			res.send(err)
+		})
 })
 
 module.exports = router
@@ -23,4 +34,11 @@ module.exports = router
  				such as queries, headers, and parameters
  	*		The response variable is what we will return as a response in conjunction to the request.
  	*		We send the response through the send method of the response variable
+ 	* NOTE: Do not forget to follow RESTful architecture. DO NOT FOLLOW THE URL FORMAT OF THE TEST ROUTES.
+ 	*	EXAMPLES:
+ 	*		GET /users/				-->		Returns a list of all the users
+ 	*		GET /users/:id 			-->		Returns the user with the given id
+ 	*		ADD /users				-->		Adds a user
+ 	*		PUT /users/:id 			-->		Updates the user with the given id
+ 	*		DELETE /users/:id 		-->		Deletes the user with the given id
 */

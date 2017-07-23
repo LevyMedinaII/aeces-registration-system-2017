@@ -1,8 +1,36 @@
 var Sequelize = require('sequelize');
+require('dotenv').config();
+
+var database = process.env.DATABASE
+var username = process.env.USER
+var password = process.env.PASSWORD
+var db_port = 5433
+var db_url = 'localhost'
+
+const sequelize = new Sequelize(`postgres://${username}:${password}@${db_url}:${db_port}/${database}`);
+
+sequelize.authenticate()
+    .then(() => {
+        console.log('Connection has been established successfully.')
+    })
+    .catch(err => {
+        console.error('Unable to connect to the database:', err)
+    })
+
+const Models = sequelize.import("../db/init")
 
 module.exports = {
 	test: () => {
 		return 'user service test successful!'
+	}, 
+	get_sample: () => {
+		return Models.Sample.findAll()
+			.then(res => {
+				return res;
+			})
+			.catch(err => {
+				return err;
+			})
 	}
 }
 
@@ -11,6 +39,8 @@ module.exports = {
 	* For all db access requests, use javascript promises to ensure that the db api call finishes
 	* Format:
 	*	return <promise>
+	*   Promises are async functions that always return a value, whether a successful request <.then(response_parameter_name)>
+          	is performed, or a bad request is performed <.catch(error_parameter_name)>
 	* Example:
 	*	add: (name, age, gender) => {
 	*		return Models.Users.create(params)

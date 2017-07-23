@@ -20,7 +20,7 @@ var tunnel = localtunnel(port, {subdomain: 'levylocal'}, (err, tunnel) => {
 
 //APP Imports
 app.use('/users', users);
-// app.use('/db', db_init);
+require('./app/db/init');
 
 //MISC
 app.listen(port);

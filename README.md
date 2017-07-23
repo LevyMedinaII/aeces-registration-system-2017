@@ -3,10 +3,14 @@ Backend server for the AECES Registration System
 
 ## How to use:
 1. Install postgresql on your system
-2. Configure the database (db, username, password) and change the .env file accordingly
-3. Install node.js and npm (bundle with node.js)
-4. Run npm install to install the required modules
-5. Run npm start to start the server!
+2. Configure the database (db, username, password)
+3. Create a .env file with the ff:
+	DATABASE=<db>
+	USER=<username>
+	PASSWORD=<password>
+4. Install node.js and npm (bundle with node.js)
+5. Run npm install to install the required modules
+6. Run npm start to start the server!
 
 ## Packages List:
 1. nodemon
