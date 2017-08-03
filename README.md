@@ -8,9 +8,13 @@ Backend server for the AECES Registration System
 	DATABASE=<db>
 	USER=<username>
 	PASSWORD=<password>
+	DB_PORT=<db_port>
+	gmail_email=<emailer_email>
+	gmail_password=<emailer_app_password>
 4. Install node.js and npm (bundle with node.js)
 5. Run npm install to install the required modules
-6. Run npm start to start the server!
+6. Generate an application password for your gmail account for the app's .env file via https://security.google.com/settings/security/apppasswords
+7. Run npm start to start the server!
 
 ## Packages List:
 1. nodemon
@@ -27,6 +31,7 @@ Backend server for the AECES Registration System
 	* Database ORM
 6. bodyParser
 	* for parsing request bodies with express
+
 
 ## Some Files Details
 1. .gitignore

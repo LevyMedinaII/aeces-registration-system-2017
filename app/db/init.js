@@ -1,3 +1,15 @@
+/*
+    * File for creating the database and connecting to it
+    * Uses sequelize ORM module for more secure and easier database access
+    * Since this file was "required" by the server, the code is automatically ran
+    * Code:
+    *   We first imported sequelize
+    *   Next, we created a database connection via const sequelize = ...
+    *   We then authenticated our connection via promise
+    *   We then create a table variable called Sample with the column "name" of type "text" and the table name "sample"
+    *   We then sync it with our database, adding the table to it
+*/
+
 var Sequelize = require('sequelize')
 require('dotenv').config()
 
@@ -66,8 +78,8 @@ const Applicants = sequelize.define('applicants', {
 })
 
 //TABLE CREATION
-Sample                  .sync().then(()=>{}).catch((err)=>{console.log(err)})
-Applicants              .sync().then(()=>{}).catch((err)=>{console.log(err)})
+Sample.sync().then(()=>{}).catch((err)=>{console.log(err)})
+Applicants.sync().then(()=>{}).catch((err)=>{console.log(err)})
 
 module.exports = (sequelize, DataTypes) => {
     return {
@@ -75,15 +87,3 @@ module.exports = (sequelize, DataTypes) => {
         Applicants
     }
 }
-
-/*
-    * File for creating the database and connecting to it
-    * Uses sequelize ORM module for more secure and easier database access
-    * Since this file was "required" by the server, the code is automatically ran
-    * Code:
-    *   We first imported sequelize
-    *   Next, we created a database connection via const sequelize = ...
-    *   We then authenticated our connection via promise
-    *   We then create a table variable called Sample with the column "name" of type "text" and the table name "sample"
-    *   We then sync it with our database, adding the table to it
-*/

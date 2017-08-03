@@ -1,6 +1,3 @@
-var user_controller = require('./user.controller')
-module.exports = user_controller
-
 /*
  	* This is the connection between the server and the users controller.
  	* Visualization:
@@ -11,3 +8,6 @@ module.exports = user_controller
  	*	We then export the variable user_controller as the default export for this file
  	*	This is then used when we import this file in server.js
 */
+
+var user_controller = require('./user.controller')
+module.exports = user_controller

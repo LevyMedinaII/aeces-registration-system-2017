@@ -1,35 +1,3 @@
-//PACKAGES
-var express = require('express')
-var localtunnel = require('localtunnel')
-var bodyParser = require('body-parser')
-
-//VARIABLES AND INSTANTIATIONS
-const port = 5000
-
-var app = express()
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
-
-var tunnel = localtunnel(port, {subdomain: 'levylocal'}, (err, tunnel) => {
-	if(err) {
-		console.log(err)
-	}
-	console.log('localhost accessible via localtunnel link:', tunnel.url);
-	tunnel.url
-})
-
-
-//APP Imports
-var users = require('./app/users/index.js')
-var db_init = require('./app/db/init.js')
-
-require('./app/db/init');
-app.use('/users', users);
-
-//MISC
-app.listen(port);
-console.log('App running in port:', port);
-
 /*
  	* This is the main server file
  	* This will be ran when executing the script "npm start" in the command line
@@ -55,3 +23,37 @@ console.log('App running in port:', port);
 	*	This is ES6 Javascript Syntax for functions. It is very identical to ES5 syntax: function(params){ function processes here...}
 	*	We call this a fat arrow function
 */
+
+//PACKAGES
+var express = require('express')
+var localtunnel = require('localtunnel')
+var bodyParser = require('body-parser')
+
+//VARIABLES AND INSTANTIATIONS
+const port = 5000
+
+var app = express()
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+
+var tunnel = localtunnel(port, {subdomain: 'levylocal'}, (err, tunnel) => {
+	if(err) {
+		console.log(err)
+	}
+	console.log('localhost accessible via localtunnel link:', tunnel.url)
+	tunnel.url
+})
+
+
+//APP Imports
+var users = require('./app/users/index.js')
+var db_init = require('./app/db/init.js')
+var emailer = require('./app/emailer/index.js')
+
+require('./app/db/init')
+app.use('/users', users)
+app.use('/emailer', emailer)
+
+//MISC
+app.listen(port)
+console.log('App running in port:', port)
