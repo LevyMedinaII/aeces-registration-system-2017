@@ -22,10 +22,21 @@ module.exports = {
 	test: () => {
 		return 'Service [Emailer] Working'
 	},
-	get_applicant_email: (id) => {
-		return Models.Applicants.find({ where: { id }})
-			.then(applicant => {
-				return applicant.dataValues.email
+	get_applicants_email: (id) => {
+		return Models.Applicants.findAll({
+			attributes: ['id', 'email', 'is_emailed']
+		})
+			.then(res => {
+				var recipient_string = ''
+				res.map((applicant, id) => {
+					if(!applicant.dataValues.is_emailed) {
+						recipient_string += applicant.dataValues.email
+						if(id+1 != res.length)
+							recipient_string += ', '
+						applicant.update({'is_emailed': true}).then(update_status=>{}).catch(err=>{ return err })
+					}
+				})
+				return recipient_string
 			})
 			.catch(err => {
 				return err

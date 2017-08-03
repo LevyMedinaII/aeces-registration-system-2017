@@ -74,7 +74,12 @@ const Applicants = sequelize.define('applicants', {
         type: Sequelize.STRING,
         allowNull: false
     },
-    interview_sched: Sequelize.STRING
+    interview_sched: Sequelize.STRING,
+    is_emailed: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+    }
 })
 
 //TABLE CREATION

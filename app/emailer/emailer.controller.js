@@ -8,9 +8,9 @@ var emailer_creds = {
 	name: 'Levy Medina II'
 }
 
-router.get('/email/:user_id', (req, res) => {
+router.get('/email/all', (req, res) => {
 	var user_id = req.params.user_id
-	var subject = 'Test Message 01'
+	var subject = 'AECES Recweek Interview Schedule'
 	var text = 'Hello World' //email text
 	var html = 'HTML Body'	//email html text
 
@@ -25,11 +25,12 @@ router.get('/email/:user_id', (req, res) => {
 	    }
 	})
 
-	service.get_applicant_email(user_id)
-		.then(email => {
+	service.get_applicants_email()
+		.then(emails_string => {
+			console.log('Recipients:', emails_string)
 			var mail_options = {
 			    from: `"${emailer_creds.name}" <${emailer_creds.email}>`, // sender address
-			    to: `${email}`, // list of receivers
+			    to: `${emails_string}`, // list of receivers
 			    subject, text
 			}
 
