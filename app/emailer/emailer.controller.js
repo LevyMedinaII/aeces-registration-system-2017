@@ -28,30 +28,35 @@ router.get('/email/all', (req, res) => {
 	service.get_applicants_email()
 		.then(emails_string => {
 			console.log('Recipients:', emails_string)
-			var mail_options = {
-			    from: `"${emailer_creds.name}" <${emailer_creds.email}>`, // sender address
-			    to: `${emails_string}`, // list of receivers
-			    subject, text
+			if(emails_string == ''){
+				res.send('No recipients to send to.')
 			}
+			else {
+				var mail_options = {
+				    from: `"${emailer_creds.name}" <${emailer_creds.email}>`, // sender address
+				    to: `${emails_string}`, // list of receivers
+				    subject, text
+				}
 
-			// verify connection
-			transporter.verify()
-				.then(result => {
-					console.log('Verification Result:', result)
-				})
-				.catch(err => {
-					console.log('Verification Error:', err)
-				})
+				// verify connection
+				transporter.verify()
+					.then(result => {
+						console.log('Verification Result:', result)
+					})
+					.catch(err => {
+						console.log('Verification Error:', err)
+					})
 
-			// send mail with defined transport object
-			transporter.sendMail(mail_options, (error, info) => {
-			    if (error) {
-			        console.log(error)
-			        res.send(error)
-			    }
-			    console.log(`Message sent: \n Message_ID: ${info.messageId} \n Response: ${info.response}`)
-			    res.send(`Message sent: \n Message_ID: ${info.messageId} \n Response: ${info.response}`)
-			})
+				// send mail with defined transport object
+				transporter.sendMail(mail_options, (error, info) => {
+				    if (error) {
+				        console.log(error)
+				        res.send(error)
+				    }
+				    console.log(`Message sent: \n Message_ID: ${info.messageId} \n Response: ${info.response}`)
+				    res.send(`Message sent: \n Message_ID: ${info.messageId} \n Response: ${info.response}`)
+				})
+			}
 		})
 		.catch(err => {
 			res.send(err)
