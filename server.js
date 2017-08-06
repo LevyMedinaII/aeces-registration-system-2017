@@ -49,10 +49,12 @@ var tunnel = localtunnel(port, {subdomain: 'levylocal'}, (err, tunnel) => {
 var users = require('./app/users/index.js')
 var db_init = require('./app/db/init.js')
 var emailer = require('./app/emailer/index.js')
+var scheduler = require('./app/scheduler/index.js')
 
 require('./app/db/init')
 app.use('/users', users)
 app.use('/emailer', emailer)
+app.use('/scheduler', scheduler)
 
 //MISC
 app.listen(port)

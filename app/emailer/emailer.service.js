@@ -19,9 +19,6 @@ sequelize.authenticate()
 const Models = sequelize.import("../db/init")
 
 module.exports = {
-	test: () => {
-		return 'Service [Emailer] Working'
-	},
 	get_applicants_email: (id) => {
 		return Models.Applicants.findAll({
 			attributes: ['id', 'email', 'is_emailed']

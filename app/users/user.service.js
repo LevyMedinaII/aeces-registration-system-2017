@@ -20,7 +20,7 @@ const Models = sequelize.import("../db/init")
 
 module.exports = {
 	test: () => {
-		return 'user service test successful!'
+		return 'Service [user] is working.'
 	}, 
 	get_sample: () => {
 		return Models.Sample.findAll()
@@ -33,24 +33,32 @@ module.exports = {
 	},
 
 	add: (id_number, first_name, last_name, year, course, block, is_new_member, id_pic_link, mobile_number, email, interview_sched) => {
-		return Models.Applicants.create({
-			id_number,
-			first_name,
-			last_name,
-			year,
-			course,
-			block,
-			is_new_member,
-			id_pic_link,
-			mobile_number,
-			email,
-			interview_sched
-		})
-			.then(res => {
-				return res
-			})
-			.catch(err => {
-				return err
+		return Models.Applicants.findAll({ where: {id_number }})
+			.then(search_res => {
+				if(search_res.length == 0) {
+					return Models.Applicants.create({
+						id_number,
+						first_name,
+						last_name,
+						year,
+						course,
+						block,
+						is_new_member,
+						id_pic_link,
+						mobile_number,
+						email,
+						interview_sched
+					})
+						.then(res => {
+							return res
+						})
+						.catch(err => {
+							return err
+						})
+				}
+				else {
+					return `ID Number ${id_number} already exists in the database`
+				}
 			})
 	},
 	get_all: () => {
@@ -74,7 +82,7 @@ module.exports = {
 	update: (id, id_number, first_name, last_name, year, course, block, is_new_member, id_pic_link, mobile_number, email, interview_sched) => {
 		return Models.Applicants.find({ where: {id} })
 			.then(applicant => {
-				applicant.updateAttributes({
+				return applicant.updateAttributes({
 					id_number, 
 					first_name, 
 					last_name, 
@@ -101,7 +109,7 @@ module.exports = {
 	delete: (id) => {
 		return Models.Applicants.find({ where: {id} })
 			.then(applicant => {
-				applicant.destroy()
+				return applicant.destroy()
 					.then(res => {
 						return res
 					})

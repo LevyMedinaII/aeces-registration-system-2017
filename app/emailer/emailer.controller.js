@@ -61,7 +61,6 @@ router.get('/email/all', (req, res) => {
 		.catch(err => {
 			res.send(err)
 		})
-	
 })
 
 module.exports = router

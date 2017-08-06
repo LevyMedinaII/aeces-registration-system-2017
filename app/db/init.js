@@ -13,6 +13,7 @@
 var Sequelize = require('sequelize')
 require('dotenv').config()
 
+//Database Variables
 var database = process.env.DATABASE
 var username = process.env.USER
 var password = process.env.PASSWORD
@@ -81,14 +82,35 @@ const Applicants = sequelize.define('applicants', {
         defaultValue: false
     }
 })
+const Schedules = sequelize.define('schedules', {
+    date: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    timeslot: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    is_taken: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+    },
+    applicant_id: {
+        type: Sequelize.INTEGER,
+        unique: true
+    }
+})
 
 //TABLE CREATION
 Sample.sync().then(()=>{}).catch((err)=>{console.log(err)})
 Applicants.sync().then(()=>{}).catch((err)=>{console.log(err)})
+Schedules.sync().then(()=>{}).catch((err) => {console.log(err)})
 
 module.exports = (sequelize, DataTypes) => {
     return {
         Sample, 
-        Applicants
+        Applicants,
+        Schedules
     }
 }
