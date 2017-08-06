@@ -10,10 +10,19 @@ router.get('/schedules', (req, res) => {
 			res.send(err)
 		})
 })
-router.put('/', (req, res) => {
-	service.schedule_applicant(req.body.date, req.body.timeslot, req.body.applicant_id)
-		.then(update_res => {
-			res.send(update_res)
+router.get('/schedules/free', (req, res) => {
+	service.get_all_free()
+		.then(schedules => {
+			res.send(schedules)
+		})
+		.catch(err => {
+			res.send(err)
+		})
+})
+router.get('/applicants/:id', (req, res) => {
+	service.find_schedule(req.params.id)
+		.then(schedule => {
+			res.send(schedule)
 		})
 		.catch(err => {
 			res.send(err)
@@ -32,6 +41,15 @@ router.post('/schedules/generate', (req, res) => {
 	service.generate()
 		.then(seed_res => {
 			res.send(seed_res)
+		})
+		.catch(err => {
+			res.send(err)
+		})
+})
+router.put('/', (req, res) => {
+	service.schedule_applicant(req.body.date, req.body.timeslot, req.body.applicant_id)
+		.then(update_res => {
+			res.send(update_res)
 		})
 		.catch(err => {
 			res.send(err)

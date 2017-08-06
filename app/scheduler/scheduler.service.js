@@ -29,6 +29,15 @@ module.exports = {
 				return err
 			})
 	},
+	get_all_free: () => {
+		return Models.Schedules.findAll({ where: { is_taken: false, applicant_id: null } })
+			.then(schedules => {
+				return schedules
+			})
+			.catch(err => {
+				return err
+			})
+	},
 	clear_timeslot: (applicant_id) => {
 		return Models.Schedules.find({ where: { applicant_id } })
 			.then(schedule => {
@@ -40,6 +49,20 @@ module.exports = {
 						.catch(err => {
 							return err
 						})
+				}
+				else {
+					return `This applicant hasn't signed up yet.`
+				}
+			})
+			.catch(err => {
+				return err
+			})
+	},
+	find_schedule: (applicant_id) => {
+		return Models.Schedules.find({ where: { applicant_id } })
+			.then(schedule => {
+				if(schedule){
+					return schedule.dataValues
 				}
 				else {
 					return `This applicant hasn't signed up yet.`
