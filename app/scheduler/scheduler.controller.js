@@ -28,8 +28,8 @@ router.post('/remove/:applicant_id', (req, res) => {
 			res.send(err)
 		})
 })
-router.post('/schedules/seed', (req, res) => {
-	service.seed()
+router.post('/schedules/generate', (req, res) => {
+	service.generate()
 		.then(seed_res => {
 			res.send(seed_res)
 		})

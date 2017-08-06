@@ -92,7 +92,7 @@ module.exports = {
 				return err
 			})
 	},
-	seed: () => {
+	generate: () => {
 		return Models.Schedules.findAll()
 			.then(schedules => {
 				if(schedules.length == 0) {
@@ -142,10 +142,10 @@ module.exports = {
 				        current_time_generator = moment(`${start_date} ${start_time}`)
 				    }
 				    while(date != end_date_string)
-				    return 'Data has been seeded'
+				    return 'Timeslots have been generated'
 				}
 				else {
-					return 'There is an existing schedule table. Please delete the table first and restart the server to seed.'
+					return 'There is an existing schedule table. Please delete the table first and restart the server to generate fresh timeslots.'
 				}
 			})
 			.catch(err => {
