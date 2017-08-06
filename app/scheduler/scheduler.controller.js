@@ -13,8 +13,16 @@ router.get('/schedules', (req, res) => {
 router.put('/', (req, res) => {
 	service.schedule_applicant(req.body.date, req.body.timeslot, req.body.applicant_id)
 		.then(update_res => {
-			console.log('Res:', update_res)
 			res.send(update_res)
+		})
+		.catch(err => {
+			res.send(err)
+		})
+})
+router.post('/remove/:applicant_id', (req, res) => {
+	service.clear_timeslot(req.params.applicant_id)
+		.then(clear_res => {
+			res.send(clear_res)
 		})
 		.catch(err => {
 			res.send(err)

@@ -29,15 +29,35 @@ module.exports = {
 				return err
 			})
 	},
+	clear_timeslot: (applicant_id) => {
+		return Models.Schedules.find({ where: { applicant_id } })
+			.then(schedule => {
+				if(schedule){					
+					return schedule.update({ is_taken: false, applicant_id: null })
+						.then(update_res => {
+							return `Timeslot ${schedule.dataValues.date} ${schedule.dataValues.timeslot} has been cleared.` 
+						})
+						.catch(err => {
+							return err
+						})
+				}
+				else {
+					return `This applicant hasn't signed up yet.`
+				}
+			})
+			.catch(err => {
+				return err
+			})
+	},
 	schedule_applicant: (date, timeslot, applicant_id) => {
 		return Models.Schedules.find({ where: { date, timeslot } })
 			.then(schedule => {
 				return Models.Applicants.find({ where: { id: applicant_id }, attributes: ['id'] })
 					.then(applicant_id => {
 						applicant_id = applicant_id.dataValues.id
-						return Models.Schedules.findAll({ where: { applicant_id }})
+						return Models.Schedules.find({ where: { applicant_id }})
 							.then(search_if_exists => {
-								if(search_if_exists.length == 0){
+								if(!search_if_exists){
 									return schedule.update({ 
 										applicant_id, 
 										is_taken: true, 
@@ -46,7 +66,6 @@ module.exports = {
 										.then(update_res => {
 											return Models.Schedules.find({ where: { applicant_id } })
 												.then(updated_schedule => {
-													console.log(updated_schedule.dataValues)
 													return updated_schedule.dataValues
 												})
 												.catch(err => {
