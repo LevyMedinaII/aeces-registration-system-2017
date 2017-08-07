@@ -41,14 +41,26 @@ module.exports = {
 	clear_timeslot: (applicant_id) => {
 		return Models.Schedules.find({ where: { applicant_id } })
 			.then(schedule => {
-				if(schedule){					
-					return schedule.update({ is_taken: false, applicant_id: null })
-						.then(update_res => {
-							return `Timeslot ${schedule.dataValues.date} ${schedule.dataValues.timeslot} has been cleared.` 
+				if(schedule){
+					return Models.Applicants.find({ where: { id: applicant_id } })
+						.then(applicant => {				
+							return schedule.update({ is_taken: false, applicant_id: null })
+								.then(update_res => {
+									return applicant.update({ interview_sched: null })
+										.then(update_res => {
+											return `Timeslot ${schedule.dataValues.date} ${schedule.dataValues.timeslot} has been cleared.`
+										})
+										.catch(err => {
+											return err
+										})
+								})
+								.catch(err => {
+									return err
+								})
 						})
 						.catch(err => {
 							return err
-						})
+						}) 
 				}
 				else {
 					return `This applicant hasn't signed up yet.`

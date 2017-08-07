@@ -21,12 +21,12 @@ const Models = sequelize.import("../db/init")
 module.exports = {
 	get_applicants_email: (id) => {
 		return Models.Applicants.findAll({
-			attributes: ['id', 'email', 'is_emailed']
+			attributes: ['id', 'interview_sched','email', 'is_emailed']
 		})
 			.then(res => {
 				var recipient_string = ''
 				res.map((applicant, id) => {
-					if(!applicant.dataValues.is_emailed) {
+					if(!applicant.dataValues.is_emailed && applicant.dataValues.interview_sched) {
 						recipient_string += applicant.dataValues.email
 						if(id+1 != res.length)
 							recipient_string += ', '
