@@ -73,13 +73,17 @@ module.exports = {
 			})
 	},
 	schedule_applicant: (date, timeslot, applicant_id) => {
+		//	find the schedule with the given date and timeslot
 		return Models.Schedules.find({ where: { date, timeslot } })
 			.then(schedule => {
+				//	find the applicant with the given applicant id
 				return Models.Applicants.find({ where: { id: applicant_id }, attributes: ['id'] })
 					.then(applicant_id => {
 						applicant_id = applicant_id.dataValues.id
+						//find within schedules the schedule with the given applicant id
 						return Models.Schedules.find({ where: { applicant_id }})
 							.then(search_if_exists => {
+								//if the applicant has not yet signed up, add him to that schedule
 								if(!search_if_exists){
 									return schedule.update({ 
 										applicant_id, 
@@ -87,9 +91,26 @@ module.exports = {
 										where: { is_taken: false } 
 									})
 										.then(update_res => {
+											//	get the newly updated schedule
 											return Models.Schedules.find({ where: { applicant_id } })
 												.then(updated_schedule => {
-													return updated_schedule.dataValues
+													//	get the newly scheduled applicant in the applicants table
+													Models.Applicants.find({ where: { id: applicant_id } })
+														.then(applicant_to_be_updated => {
+															//	update the applicant's interview sched field
+															return applicant_to_be_updated.update({
+																interview_sched: `${updated_schedule.dataValues.date} ${updated_schedule.dataValues.timeslot}`
+															})
+																.then(update_res => {
+																	return updated_schedule.dataValues
+																})
+																.catch(err => {
+																	return err
+																})
+														})
+														.catch(err => {
+															return err
+														})
 												})
 												.catch(err => {
 													return err
@@ -99,7 +120,7 @@ module.exports = {
 											return err
 										})
 								}
-								else {
+								else {	//	if the user already has a schedule, return this value:
 									return 'User already has a schedule. Please delete his schedule first'
 								}
 							})

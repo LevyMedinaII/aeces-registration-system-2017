@@ -31,6 +31,8 @@ Backend server for the AECES Registration System
 	* Database ORM
 6. bodyParser
 	* for parsing request bodies with express
+7. json2csv
+	* used for csv file writing
 
 
 ## Some Files Details
