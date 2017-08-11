@@ -120,6 +120,36 @@ module.exports = {
 			.catch(err => {
 				return err
 			})
+	},
+	pay: (id) => {
+		return Models.Applicants.find({ where: {id} })
+			.then(applicant => {
+				return applicant.update({ is_paid: true })
+					.then(res => {
+						return 'User has successfully paid'
+					})
+					.catch(err => {
+						return err
+					})
+			})
+			.catch(err => {
+				return err
+			})
+	},
+	unpay: (id) => {
+		return Models.Applicants.find({ where: {id} })
+			.then(applicant => {
+				return applicant.update({ is_paid: false })
+					.then(res => {
+						return 'User has successfully paid'
+					})
+					.catch(err => {
+						return err
+					})
+			})
+			.catch(err => {
+				return err
+			})
 	}
 }
 

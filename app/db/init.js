@@ -80,6 +80,11 @@ const Applicants = sequelize.define('applicants', {
         type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue: false
+    },
+    is_paid: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
     }
 })
 const Schedules = sequelize.define('schedules', {

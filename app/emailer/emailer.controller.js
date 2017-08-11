@@ -47,15 +47,14 @@ router.get('/email/all', (req, res) => {
 						console.log('Verification Error:', err)
 					})
 
-				// send mail with defined transport object
-				transporter.sendMail(mail_options, (error, info) => {
-				    if (error) {
-				        console.log(error)
-				        res.send(error)
-				    }
-				    console.log(`Message sent: \n Message_ID: ${info.messageId} \n Response: ${info.response}`)
-				    res.send(`Message sent: \n Message_ID: ${info.messageId} \n Response: ${info.response}`)
-				})
+				//send mail with defined transport object
+				transporter.sendMail(mail_options)
+					.then(email_result => {
+						res.send(email_result)
+					})
+					.catch(err => {
+						res.send(err)
+					})
 			}
 		})
 		.catch(err => {

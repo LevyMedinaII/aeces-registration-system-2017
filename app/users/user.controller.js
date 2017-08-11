@@ -72,7 +72,8 @@ router.post('/', (req, res) => {
 		req.body.id_pic_link,
 		req.body.mobile_number,
 		req.body.email,
-		req.body.interview_sched
+		req.body.interview_sched,
+		req.body.is_paid
 	)
 		.then(add_res => {
 			res.send(add_res)
@@ -95,8 +96,29 @@ router.put('/:id', (req, res) => {
 		req.body.id_pic_link,
 		req.body.mobile_number,
 		req.body.email,
-		req.body.interview_sched
+		req.body.interview_sched,
+		req.body.is_paid
 	)
+		.then(update_res => {
+			res.send(update_res)
+		})
+		.catch(err => {
+			res.send(err)
+		})
+})
+
+router.put('/:id/pay', (req, res) => {
+	service.pay(req.params.id)
+		.then(update_res => {
+			res.send(update_res)
+		})
+		.catch(err => {
+			res.send(err)
+		})
+})
+
+router.put('/:id/unpay', (req, res) => {
+	service.pay(req.params.id)
 		.then(update_res => {
 			res.send(update_res)
 		})
