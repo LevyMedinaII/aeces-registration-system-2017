@@ -1,2 +1,4 @@
 node_modules
 .env
+applicants_db.csv
+schedules_db.csv
