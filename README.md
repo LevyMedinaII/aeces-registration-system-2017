@@ -20,18 +20,16 @@ Backend server for the AECES Registration System
 1. nodemon
 	* Used for speeding up development
 	* Restarts server after saving changes
-2. localtunnel
-	* Allows the local application to be accesible via the internet
-3. express
+2. express
 	* Base of the application
 	* Used for running the server and routing
-4. dotenv
+3. dotenv
 	* Used for managing the environment of the application
-5. sequelize
+4. sequelize
 	* Database ORM
-6. bodyParser
+5. bodyParser
 	* for parsing request bodies with express
-7. json2csv
+6. json2csv
 	* used for csv file writing
 
 

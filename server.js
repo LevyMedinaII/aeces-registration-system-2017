@@ -26,24 +26,14 @@
 
 //PACKAGES
 var express = require('express')
-var localtunnel = require('localtunnel')
 var bodyParser = require('body-parser')
 
 //VARIABLES AND INSTANTIATIONS
 const port = 5000
 
 var app = express()
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
-
-var tunnel = localtunnel(port, {subdomain: 'levylocal'}, (err, tunnel) => {
-	if(err) {
-		console.log(err)
-	}
-	console.log('localhost accessible via localtunnel link:', tunnel.url)
-	tunnel.url
-})
-
 
 //APP Imports
 var users = require('./app/users/index.js')
