@@ -96,12 +96,27 @@ const Schedules = sequelize.define('schedules', {
         type: Sequelize.STRING,
         allowNull: false
     },
-    is_taken: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false,
-        defaultValue: false
+    slot_1: {
+        type: Sequelize.INTEGER,
+        unique: true
     },
-    applicant_id: {
+    slot_2: {
+        type: Sequelize.INTEGER,
+        unique: true
+    },
+    slot_3: {
+        type: Sequelize.INTEGER,
+        unique: true
+    },
+    slot_4: {
+        type: Sequelize.INTEGER,
+        unique: true
+    },
+    slot_5: {
+        type: Sequelize.INTEGER,
+        unique: true
+    },
+    slot_6: {
         type: Sequelize.INTEGER,
         unique: true
     }

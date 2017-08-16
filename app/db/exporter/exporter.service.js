@@ -65,14 +65,14 @@ const Models = sequelize.import('../init')
  
 module.exports = {
 	export_schedules: () => {
-		return Models.Schedules.findAll({ attributes: ['id', 'date', 'timeslot', 'is_taken', 'applicant_id'] })
+		return Models.Schedules.findAll({
+			attributes: ['id', 'date', 'timeslot', 'slot_1', 'slot_2', 'slot_3', 'slot_4', 'slot_5', 'slot_6'] 
+		})
 			.then(schedules => {
 				if(schedules.length > 0) {
 					return Models.Applicants.findAll()
 						.then(applicants => {
 							if(applicants.length > 0) {
-
-								var master_file_data = []
 								var schedules_table_data = []
 								var applicants_table_data = []
 
@@ -82,47 +82,8 @@ module.exports = {
 								//	Sets applicants table csv
 								applicants.map(applicant => { applicants_table_data.push(applicant.dataValues) })
 
-								/*
-								 *	Sets master file data csv by reusing the schedule array of json,
-								 *	adding fields to it for the masterfile
-								*/
-								schedules.map(schedule => {
-									applicants.map(applicant => {
-										if(schedule.dataValues.applicant_id == null) {
-											schedule.dataValues['First Name'] = null
-											schedule.dataValues['Last Name'] = null
-											schedule.dataValues['Year'] = null
-											schedule.dataValues['Course']  = null
-											schedule.dataValues['New Member?'] = null
-											schedule.dataValues['Mobile Number'] = null
-											schedule.dataValues['Email'] = null
-											schedule.dataValues['Was Already Emailed?'] = null
-										}
-										else if(applicant.dataValues.id == schedule.dataValues.applicant_id) {
-											schedule.dataValues['First Name'] = applicant.dataValues.first_name
-											schedule.dataValues['Last Name'] = applicant.dataValues.last_name
-											schedule.dataValues['Year'] = applicant.dataValues.year
-											schedule.dataValues['Course']  = applicant.dataValues.course
-											schedule.dataValues['New Member?'] = applicant.dataValues.is_new_member
-											schedule.dataValues['Mobile Number'] = applicant.dataValues.mobile_number
-											schedule.dataValues['Email'] = applicant.dataValues.email
-											schedule.dataValues['Was Already Emailed?'] = applicant.dataValues.is_emailed
-										}
-									})
-									master_file_data.push(schedule.dataValues)
-								})
-
-								//	initialize csv data and fields
-								var master_file_csv = json2csv({ data: master_file_data, fields: master_file_fields })
 								var schedules_table_csv = json2csv({ data: schedules_table_data, fields: schedules_table_fields })
 								var applicants_table_csv = json2csv({ data: applicants_table_data, fields: applicants_table_fields })
-
-								//	write master file
-								fs.writeFile(master_file_name, master_file_csv, err => {
-									if (err)
-										return err
-									console.log(`File saved as ${master_file_name}`)
-								})
 
 								//	write schedules table
 								fs.writeFile(schedules_tables_file_name, schedules_table_csv, err => {
