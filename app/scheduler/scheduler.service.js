@@ -3,7 +3,7 @@ var moment = require('moment')
 require('dotenv').config()
 
 var database = process.env.DATABASE
-var username = process.env.USER
+var username = process.env.DB_USER
 var password = process.env.PASSWORD
 var db_port = process.env.DB_PORT
 

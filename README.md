@@ -7,7 +7,7 @@ Backend server for the AECES Registration System
 3. Create a .env file with the ff:
 ```
 DATABASE=<db>
-USER=<username>
+DB_USER=<username>
 PASSWORD=<password>
 DB_PORT=<db_port>
 gmail_email=<emailer_email>
