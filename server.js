@@ -13,10 +13,10 @@
  	*		tunnel is an instance of localtunnel
  	*			localtunnel allows our local server to be accessible via the internet
  	*			This is useful for webhooks, etc.
- 	*		We then use the "use" method of app to import the API inside index.js 
+ 	*		We then use the "use" method of app to import the API inside index.js
  				(check index.js and user.controller for more info on this)
  	*		We then use the "listen" method of app to run the server given the port variable
- 	*	NOTE: 
+ 	*	NOTE:
  	*		(params) => {
 				function processes here...
 	 		}
@@ -30,11 +30,11 @@ var bodyParser = require('body-parser')
 
 //VARIABLES AND INSTANTIATIONS
 const port = 5000
-
+var cors = require('cors')
 var app = express()
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
-
+app.options('*', cors());
 //APP Imports
 var users = require('./app/users/index.js')
 var db_init = require('./app/db/init.js')
@@ -47,6 +47,7 @@ app.use('/users', users)
 app.use('/emailer', emailer)
 app.use('/scheduler', scheduler)
 app.use('/exporter', exporter)
+
 
 //MISC
 app.listen(port)

@@ -76,6 +76,8 @@ router.post('/', (req, res) => {
 		req.body.is_paid
 	)
 		.then(add_res => {
+			res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:8080')
+			res.header('Authorization', '1234')
 			res.send(add_res)
 		})
 		.catch(err => {
