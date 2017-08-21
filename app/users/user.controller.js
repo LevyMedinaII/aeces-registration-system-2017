@@ -77,7 +77,7 @@ router.post('/', (req, res) => {
 	)
 		.then(add_res => {
 			res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:8080')
-			res.header('Access-Control-Allow-Origin', 'http://192.168.1.104:8080')
+			res.header('Access-Control-Allow-Origin', '*')
 			res.send(add_res)
 		})
 		.catch(err => {

@@ -59,7 +59,7 @@ module.exports = {
 					{ slot_5: null },
 					{ slot_6: null }
 				]
-			} 
+			}
 		})
 			.then(schedules => {
 				return schedules
@@ -98,7 +98,7 @@ module.exports = {
 																return {
 																	schedules_table_entry: updated_schedule,
 																	applicants_table_entry: updated_applicant
-																}																
+																}
 															})
 															.catch(err => {
 																return err
@@ -197,7 +197,7 @@ module.exports = {
 									//if the applicant has not yet signed up, add him to that schedule
 									if(!search_if_exists) {
 										var add_applicant_to_this_slot = find_slot_in_schedules_table(schedule, null)
-										return schedule.update({ 
+										return schedule.update({
 											[add_applicant_to_this_slot]: applicant_id_number
 										})
 											.then(update_res => {
@@ -302,6 +302,6 @@ module.exports = {
 			.catch(err => {
 				return err
 			})
-		
+
 	}
 }

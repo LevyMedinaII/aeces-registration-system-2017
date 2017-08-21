@@ -318,5 +318,5 @@ select#soflow {
 .clicked {
   border-color: #FFFFE0;
   border-width: medium;
-  border: 3px solid;
+  border: 1.5px solid;
 }

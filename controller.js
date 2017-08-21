@@ -1,8 +1,9 @@
 var register =  angular.module('Regsystem', []);
 
-register.controller('regController', ['$scope', '$http',function($scope, $http){
+register.controller('regController', ['$scope', '$http', '$location', '$window', '$timeout',function($scope, $http, $location, $window, $timeout){
+  //initialize applicant object
   $scope.applicant = {}
-    $http.get('http://localhost:5000/scheduler/schedules', {headers: {'Access-Control-Allow-Origin': 'http://127.0.0.1:8080'}})
+    $http.get('http://192.168.1.104:5000/scheduler/schedules', {headers: {'Access-Control-Allow-Origin': 'http://127.0.0.1:8080'}})
      .then(function(schedules){
        //console.log(typeof(schedules));
        // console.log("Success");
@@ -19,29 +20,28 @@ register.controller('regController', ['$scope', '$http',function($scope, $http){
        console.log(applicant)
      }
      $scope.interviewDates ={
+     selectedOption: "Please choose an interview date",
      availableOptions:
      [
        {"dateVal" : "08-29-2017", "dateText" : "August 29 (Tuesday)"},
        {"dateVal" : "08-30-2017", "dateText" : "August 30 (Wednesday)"},
        {"dateVal" : "08-31-2017", "dateText" : "August 31 (Thursday)"},
        {"dateVal" : "09-01-2017", "dateText" : "September 01 (Friday)"}
-     ],
-     selectedOption:
-     [
-       {"dateVal" : "null", "dateText" : "Please choose date of interview"}
      ]
     }
+
     $scope.pickSched = {
-      selected : false
+      selected: false
     }
+    $scope.applicant.is_paid= true
+    $scope.applicant.is_emailed= false
     $scope.chooseDate = function(){
       if (!document.getElementById('new_member').dirty){
       $scope.applicant.is_new_member = false
-      $scope.applicant.is_paid= true
-      $scope.applicant.is_emailed= false
       }
       //$scope.applicant.id_pic_link = "null",
       $scope.scheduler = !$scope.scheduler
+      alert("Each timeslot can accomodate up to 6 people. Each taken slot is represented by a colored box")
     }
     var prevIndex = 200
     $scope.applyToDate = function(index){
@@ -67,19 +67,39 @@ register.controller('regController', ['$scope', '$http',function($scope, $http){
     }
   }
   $scope.applyMember = function(){
-    $http.post('http://localhost:5000/users/', $scope.applicant, {headers: {'Access-Control-Allow-Origin': 'http://127.0.0.1:8080'}})
-    .then (function(response){  
-        $http.put('http://localhost:5000/scheduler/', applicant_scheduled, {headers: {'Access-Control-Allow-Origin': 'http://127.0.0.1:8080'}})
+    $http.post('http://192.168.1.104:5000/users/', $scope.applicant, {headers: {'Access-Control-Allow-Origin': 'http://127.0.0.1:8080'}})
+    .then (function(response){
+      console.log(response.data)
+      console.log(response.status)
+        $http.put('http://192.168.1.104:5000/scheduler/', applicant_scheduled, {headers: {'Access-Control-Allow-Origin': 'http://127.0.0.1:8080'}})
         .then (function(response){
-
+          if(response.status == 200){
+            if(response.data == 'The selected timeslot is full'){
+              alert(response.data);
+            }
+            else if (response.data == 'User already has a schedule. Please delete his schedule first'){
+              alert(response.data);
+            }
+            else{
+              alert('Your application has been succesfully submitted. Thank you '+ $scope.applicant.first_name+' for applying to AECES!')
+              $timeout(function() { $scope.displayErrorMsg = false;}, 2000);
+              $window.location.reload();
+              $http.get('http://192.168.1.104:5000/exporter/csv/')
+              .then(function(response){
+                return response.data
+              }, function(err){
+                return err.data
+                });
+              }
+            }
           return response
         },function(err){
-            console.log(err)
+            alert(err)
             return err
-        });
+          });
       return response
     }, function (err){
-      console.log(err)
+      alert(err)
       return err
     })
     var applicant_scheduled  = {
@@ -87,8 +107,5 @@ register.controller('regController', ['$scope', '$http',function($scope, $http){
       "date" : $scope.interviewDates.selectedOption.dateVal,
       "timeslot": $scope.interview_time
     }
-  }
-  $scope.redirect= function(path){
-    $location.path(path);
   }
 }]);
