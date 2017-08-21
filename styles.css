@@ -1,0 +1,82 @@
+select#soflow {
+   -webkit-appearance: button;
+   -webkit-border-radius: 2px;
+   -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+   -webkit-padding-end: 20px;
+   -webkit-padding-start: 2px;
+   -webkit-user-select: none;
+   background-image: url("resources/select_arrow.png"), -webkit-linear-gradient(#FAFAFA, #F4F4F4 40%, #E5E5E5);
+   background-position: 97% center;
+   background-repeat: no-repeat;
+   border: 1px solid #AAA;
+   color: #555;
+   font-size: inherit;
+   margin: 20px;
+   overflow: hidden;
+   padding: 5px 10px;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   width: 300px;
+   clear: left;
+}
+
+.timeslot {
+	width: 300px;
+	height: 35px;
+	border: 1px solid #999999;
+	margin-left: 20px;
+    margin-bottom: 5px;
+	background: #ffffff;
+	border-radius: 2px;
+}
+
+.time_container {
+	background: #fff;
+	display: inline-block;
+	height: 35px;
+	width: 80px;
+	border-right: 1px solid #999;
+	float: left;
+}
+
+.time {
+	position: relative;
+	top: 9%;
+	transform: translateY(-50%);
+	color: #263238;
+	text-align: center;
+
+}
+
+.taken_slot {
+	width: 34.5px;
+	height: 33px;
+	background-color: #123456;
+	display: inline-block;
+	float: left;
+	margin-left: 1px;
+	margin-right: 1px;
+	margin-top: 1px;
+    border-radius: 2px;
+}
+
+.timeslot2 {
+    width: 50px;
+    height: 40px;
+    border: 1px solid #999999;
+    border-radius: 2px;
+    margin-left: 20px;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+.time2 {
+    text-align: center;
+    margin: 2px;
+    margin-top: 4px;
+    margin-bottom: 10px;
+}
+
+.column {
+    float: left;
+}

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>Spectre sign up form</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="font-awesome-4.7.0\font-awesome-4.7.0\css\font-awesome.min.css">
+    <link rel='stylesheet' href="bootstrap-4.0.0-beta-dist\css\bootstrap.min.css">
+
+    <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300'>
+    <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto:400,700,300'>
+
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="angular-1.6.5/angular-1.6.5/angular.js"></script>
+
+
+
+</head>
+
+<body ng-app="Regsystem">
+  <div ng-controller = "regController" class="signup__container">
+  <div class="container__child signup__thumbnail">
+    <div class="thumbnail__content text-center">
+      <img id="logo" src="resources/aeces_logo.png" alt="AECES Logo">
+      <h1 class="heading--primary">Engineering the Future</h1>
+      <h2 class="heading--secondary">#seta<span>spark</span></h2>
+    </div>
+    <div class="thumbnail__links">
+      <ul class="list-inline m-b-0 text-center">
+        <li><a href="https://www.facebook.com/ateneoaeces" target="_blank"><i class="fa fa-facebook fa-2x"></i></a></li>
+        <li><a href="https://twitter.com/ateneoAECES" target="_blank"><i class="fa fa-twitter fa-2x"></i></a></li>
+      </ul>
+    </div>
+    <div class="signup__overlay"></div>
+  </div>
+  <div class="container__child signup__form">
+
+    <form action="#">
+        <div class="sign-up-1" ng-hide="scheduler">
+            <div class="form-group">
+        <label for="id_number">ID #</label>
+        <input class="form-control" type="text" name="id_number" id="id_number" ng-model="applicant.id_number" required />
+      </div>
+      <div class="form-group">
+        <label for="last_name">Last Name</label>
+        <input class="form-control" type="text" name="last_name" id="last_name" ng-model="applicant.last_name" required />
+      </div>
+      <div class="form-group">
+          <label for="first_name">First Name</label>
+        <input class="form-control" type="text" name="first_name" id="first_name" ng-model="applicant.first_name" required />
+      </div>
+      <div class="form-group">
+        <label for="year">Year</label>
+        <input class="form-control" type="text" name="year" id="year"  ng-model="applicant.year" required />
+      </div>
+      <div class="form-group">
+        <label for="course">Course</label>
+        <input class="form-control" type="text" name="course" id="course"  ng-model="applicant.course" required />
+      </div>
+      <div class="form-group">
+        <label for="block">Block</label>
+        <input class="form-control" type="text" name="block" id="block" ng-model="applicant.block" required />
+      </div>
+      <div class="checkbox form-group">
+        <label><input type="checkbox" name="new_member" id="new_member" ng-model="is_new_member">   New Member?</label>
+      </div>
+      <div class="form-group">
+        <label for="mobile_number">Mobile Number</label>
+        <input class="form-control" type="text" name="mobile_number" id="mobile_number" ng-model="applicant.mobile_number" required />
+      </div>
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input class="form-control" type="text" name="email" id="email" ng-model="applicant.email" required />
+      </div>
+        <button type="button" class="btn btn--form" id="next_form" ng-click="chooseDate()">Next</button>
+        </div>
+      <div class="sign-up-2" ng-show="scheduler">
+      <select id="soflow" ng-model="interviewDates.selectedOption" ng-options="category.dateText for category in interviewDates.availableOptions"></select>
+          <div class="calendar" ng-repeat="schedule in schedules | orderBy:'timeslot'">
+              <div class="column">
+              <div class="timeslot2" ng-show ="interviewDates.selectedOption.dateVal == schedule.date" ng-click="applyToDate($index)">
+                <input type="hidden" value = "{{schedule.timeslot}}" id="interview_timeslot" name="interview_timeslot" ng-model="interview_timeslot">
+                  <p class="time2">{{schedule.timeslot}}</p>
+                  <div ng-if="schedule.slot_1 != null" class="taken_slot"></div>
+                  <div ng-if="schedule.slot_2 != null" class="taken_slot"></div>
+                  <div ng-if="schedule.slot_3 != null" class="taken_slot"></div>
+                  <div ng-if="schedule.slot_4 != null" class="taken_slot"></div>
+                  <div ng-if="schedule.slot_5 != null" class="taken_slot"></div>
+                  <div ng-if="schedule.slot_6 != null" class="taken_slot"></div>
+              </div>
+      </div>
+    </div>
+    {{interviewDates.selectedOption}}
+    {{applicant}}
+    <button type="button" class="btn btn--form" id="apply_member" ng-click="applyMember()">Apply</button>
+  </div>
+
+
+    </form>
+  </div>
+</div>
+
+<script src="controller.js"></script>
+</body>
+</html>
