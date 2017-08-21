@@ -5,7 +5,7 @@ router.get('/schedules', (req, res) => {
 	service.get_all()
 		.then(schedules => {
 			res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:8080')
-			res.header('Access-Control-Allow-Origin', 'http://192.168.1.4:8080')
+			res.header('Access-Control-Allow-Origin', 'http://192.168.1.104:8080')
 			res.send(schedules)
 		})
 		.catch(err => {
@@ -52,7 +52,7 @@ router.put('/', (req, res) => {
 	service.schedule_applicant(req.body.date, req.body.timeslot, req.body.applicant_id_number)
 		.then(update_res => {
 			res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:8080')
-			res.header('Access-Control-Allow-Origin', 'http://192.168.1.4:8080')
+			res.header('Access-Control-Allow-Origin', 'http://192.168.1.104:8080')
 			res.send(update_res)
 		})
 		.catch(err => {

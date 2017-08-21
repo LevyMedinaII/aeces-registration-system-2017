@@ -68,9 +68,10 @@ register.controller('regController', ['$scope', '$http',function($scope, $http){
   }
   $scope.applyMember = function(){
     $http.post('http://localhost:5000/users/', $scope.applicant, {headers: {'Access-Control-Allow-Origin': 'http://127.0.0.1:8080'}})
-    .then (function(response){
+    .then (function(response){  
         $http.put('http://localhost:5000/scheduler/', applicant_scheduled, {headers: {'Access-Control-Allow-Origin': 'http://127.0.0.1:8080'}})
         .then (function(response){
+
           return response
         },function(err){
             console.log(err)
@@ -86,5 +87,8 @@ register.controller('regController', ['$scope', '$http',function($scope, $http){
       "date" : $scope.interviewDates.selectedOption.dateVal,
       "timeslot": $scope.interview_time
     }
+  }
+  $scope.redirect= function(path){
+    $location.path(path);
   }
 }]);
