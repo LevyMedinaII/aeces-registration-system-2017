@@ -71,7 +71,7 @@ register.controller('regController', ['$scope', '$http', '$location', '$window',
   }
   //Sumbit Application function
   $scope.applyMember = function(){
-    if ($scope.applicant.interview_sched.length != 0){
+    if ($scope.pickSched.selected){
     $http.post('http://192.168.1.105:5000/users/', $scope.applicant, {headers: {'Access-Control-Allow-Origin': 'http://127.0.0.1:8080'}})
     .then (function(response){
       console.log(response.data)
@@ -114,5 +114,8 @@ register.controller('regController', ['$scope', '$http', '$location', '$window',
       "timeslot": $scope.interview_time
       }
     }
+  else {
+    alert("Please choose a schedule")
+  }
   }
 }]);
