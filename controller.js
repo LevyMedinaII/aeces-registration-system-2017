@@ -3,7 +3,7 @@ var register =  angular.module('Regsystem', []);
 register.controller('regController', ['$scope', '$http', '$location', '$window', '$timeout',function($scope, $http, $location, $window, $timeout){
   //initialize applicant object
   $scope.applicant = {}
-    $http.get('http://192.168.1.104:5000/scheduler/schedules', {headers: {'Access-Control-Allow-Origin': 'http://127.0.0.1:8080'}})
+    $http.get('http://10.100.67.131:5000/scheduler/schedules', {headers: {'Access-Control-Allow-Origin': 'http://127.0.0.1:8080'}})
      .then(function(schedules){
        //console.log(typeof(schedules));
        // console.log("Success");
@@ -19,9 +19,9 @@ register.controller('regController', ['$scope', '$http', '$location', '$window',
      var getData = function(applicant){
        console.log(applicant)
      }
-     $scope.interviewDates ={
-     selectedOption: "Please choose an interview date",
-     availableOptions:
+     $scope.interviewDates = {
+     "selectedOption": [{"dateVal" : "null", "dateText" : "Please choose an interview date"}],
+     "availableOptions":
      [
        {"dateVal" : "08-29-2017", "dateText" : "August 29 (Tuesday)"},
        {"dateVal" : "08-30-2017", "dateText" : "August 30 (Wednesday)"},
@@ -42,6 +42,7 @@ register.controller('regController', ['$scope', '$http', '$location', '$window',
       //$scope.applicant.id_pic_link = "null",
       $scope.scheduler = !$scope.scheduler
       alert("Each timeslot can accomodate up to 6 people. Each taken slot is represented by a colored box")
+      $window.scrollTo(0,0)
     }
     var prevIndex = 200
     $scope.applyToDate = function(index){
@@ -67,11 +68,11 @@ register.controller('regController', ['$scope', '$http', '$location', '$window',
     }
   }
   $scope.applyMember = function(){
-    $http.post('http://192.168.1.104:5000/users/', $scope.applicant, {headers: {'Access-Control-Allow-Origin': 'http://127.0.0.1:8080'}})
+    $http.post('http://10.100.67.131:5000/users/', $scope.applicant, {headers: {'Access-Control-Allow-Origin': 'http://127.0.0.1:8080'}})
     .then (function(response){
       console.log(response.data)
       console.log(response.status)
-        $http.put('http://192.168.1.104:5000/scheduler/', applicant_scheduled, {headers: {'Access-Control-Allow-Origin': 'http://127.0.0.1:8080'}})
+        $http.put('http://10.100.67.131:5000/scheduler/', applicant_scheduled, {headers: {'Access-Control-Allow-Origin': 'http://127.0.0.1:8080'}})
         .then (function(response){
           if(response.status == 200){
             if(response.data == 'The selected timeslot is full'){
@@ -84,7 +85,8 @@ register.controller('regController', ['$scope', '$http', '$location', '$window',
               alert('Your application has been succesfully submitted. Thank you '+ $scope.applicant.first_name+' for applying to AECES!')
               $timeout(function() { $scope.displayErrorMsg = false;}, 2000);
               $window.location.reload();
-              $http.get('http://192.168.1.104:5000/exporter/csv/')
+              $window.scrollTo(0,0);
+              $http.get('http://10.100.67.131:5000/exporter/csv/')
               .then(function(response){
                 return response.data
               }, function(err){
