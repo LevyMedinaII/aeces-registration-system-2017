@@ -3,7 +3,7 @@ var register =  angular.module('Regsystem', []);
 register.controller('regController', ['$scope', '$http', '$location', '$window', '$timeout',function($scope, $http, $location, $window, $timeout){
   //initialize applicant object
   $scope.applicant = {}
-    $http.get('http://10.100.67.131:5000/scheduler/schedules', {headers: {'Access-Control-Allow-Origin': 'http://127.0.0.1:8080'}})
+    $http.get('http://192.168.1.105:5000/scheduler/schedules', {headers: {'Access-Control-Allow-Origin': 'http://127.0.0.1:8080'}})
      .then(function(schedules){
        //console.log(typeof(schedules));
        // console.log("Success");
@@ -29,12 +29,13 @@ register.controller('regController', ['$scope', '$http', '$location', '$window',
        {"dateVal" : "09-01-2017", "dateText" : "September 01 (Friday)"}
      ]
     }
-
+    //if already picked a sched
     $scope.pickSched = {
       selected: false
     }
     $scope.applicant.is_paid= true
     $scope.applicant.is_emailed= false
+    //Show Schedule Picker view
     $scope.chooseDate = function(){
       if (!document.getElementById('new_member').dirty){
       $scope.applicant.is_new_member = false
@@ -45,6 +46,7 @@ register.controller('regController', ['$scope', '$http', '$location', '$window',
       $window.scrollTo(0,0)
     }
     var prevIndex = 200
+    // Timeslot Clicker Function
     $scope.applyToDate = function(index){
       if (prevIndex == index || prevIndex == 200) {
       $scope.interview_time = []
@@ -64,15 +66,17 @@ register.controller('regController', ['$scope', '$http', '$location', '$window',
         }
       }
     else {
-      alert("You can only choose one schedule")
+      alert("You can only choose one schedule. Please deselect your previous slot by clicking on it again to choose a new one")
     }
   }
+  //Sumbit Application function
   $scope.applyMember = function(){
-    $http.post('http://10.100.67.131:5000/users/', $scope.applicant, {headers: {'Access-Control-Allow-Origin': 'http://127.0.0.1:8080'}})
+    if ($scope.applicant.interview_sched.length != 0){
+    $http.post('http://192.168.1.105:5000/users/', $scope.applicant, {headers: {'Access-Control-Allow-Origin': 'http://127.0.0.1:8080'}})
     .then (function(response){
       console.log(response.data)
       console.log(response.status)
-        $http.put('http://10.100.67.131:5000/scheduler/', applicant_scheduled, {headers: {'Access-Control-Allow-Origin': 'http://127.0.0.1:8080'}})
+        $http.put('http://192.168.1.105:5000/scheduler/', applicant_scheduled, {headers: {'Access-Control-Allow-Origin': 'http://127.0.0.1:8080'}})
         .then (function(response){
           if(response.status == 200){
             if(response.data == 'The selected timeslot is full'){
@@ -86,7 +90,7 @@ register.controller('regController', ['$scope', '$http', '$location', '$window',
               $timeout(function() { $scope.displayErrorMsg = false;}, 2000);
               $window.location.reload();
               $window.scrollTo(0,0);
-              $http.get('http://10.100.67.131:5000/exporter/csv/')
+              $http.get('http://192.168.1.105:5000/exporter/csv/')
               .then(function(response){
                 return response.data
               }, function(err){
@@ -108,6 +112,7 @@ register.controller('regController', ['$scope', '$http', '$location', '$window',
       "applicant_id_number" : $scope.applicant.id_number,
       "date" : $scope.interviewDates.selectedOption.dateVal,
       "timeslot": $scope.interview_time
+      }
     }
   }
 }]);

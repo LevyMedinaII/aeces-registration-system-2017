@@ -316,7 +316,6 @@ select#soflow {
 }
 
 .clicked {
-  border-color: #FFFFE0;
-  border-width: medium;
-  border: 1.5px solid;
+  border-color: #ffab26;
+  border-width: : 1.5px;
 }

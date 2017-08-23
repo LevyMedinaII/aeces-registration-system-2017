@@ -37,46 +37,47 @@
   </div>
   <div class="container__child signup__form">
 
-    <form action="#">
+    <form name="application">
         <div class="sign-up-1" ng-hide="scheduler">
             <div class="form-group">
         <label for="id_number">ID #</label>
-        <input class="form-control" type="text" name="id_number" id="id_number" ng-model="applicant.id_number" required />
+        <input class="form-control" type="text" name="id_number" id="id_number" ng-model="applicant.id_number" ng-required="true" />
       </div>
       <div class="form-group">
         <label for="last_name">Last Name</label>
-        <input class="form-control" type="text" name="last_name" id="last_name" ng-model="applicant.last_name" required />
+        <input class="form-control" type="text" name="last_name" id="last_name" ng-model="applicant.last_name" ng-required="true" />
       </div>
       <div class="form-group">
           <label for="first_name">First Name</label>
-        <input class="form-control" type="text" name="first_name" id="first_name" ng-model="applicant.first_name" required />
+        <input class="form-control" type="text" name="first_name" id="first_name" ng-model="applicant.first_name" ng-required="true" />
       </div>
       <div class="form-group">
         <label for="year">Year</label>
-        <input class="form-control" type="text" name="year" id="year"  ng-model="applicant.year" required />
+        <input class="form-control" type="text" name="year" id="year"  ng-model="applicant.year" ng-required="true" />
       </div>
       <div class="form-group">
         <label for="course">Course</label>
-        <input class="form-control" type="text" name="course" id="course"  ng-model="applicant.course" required />
+        <input class="form-control" type="text" name="course" id="course"  ng-model="applicant.course" ng-required="true" />
       </div>
       <div class="form-group">
         <label for="block">Block</label>
-        <input class="form-control" type="text" name="block" id="block" ng-model="applicant.block" required />
+        <input class="form-control" type="text" name="block" id="block" ng-model="applicant.block" ng-required="true" />
       </div>
       <div class="checkbox form-group">
-        <label><input type="checkbox" name="new_member" id="new_member" ng-model="is_new_member">   Please check if you are a New member </label>
+        <label><input type="checkbox" name="new_member" id="new_member" ng-model="applicant.is_new_member">   Please check if you are a New member </label>
       </div>
       <div class="form-group">
         <label for="mobile_number">Mobile Number</label>
-        <input class="form-control" type="text" name="mobile_number" id="mobile_number" ng-model="applicant.mobile_number" required />
+        <input class="form-control" type="text" name="mobile_number" id="mobile_number" ng-model="applicant.mobile_number" ng-required="true" />
       </div>
       <div class="form-group">
         <label for="email">Email Address</label>
-        <input class="form-control" type="text" name="email" id="email" ng-model="applicant.email" required />
+        <input class="form-control" type="text" name="email" id="email" ng-model="applicant.email" ng-required="true" />
       </div>
-        <button type="button" class="btn btn--form" id="next_form" ng-click="chooseDate()">Next</button>
+        <button class="btn btn--form" id="next_form" ng-click="application.$valid && chooseDate()" >Next</button>
         </div>
       <div class="sign-up-2" ng-show="scheduler">
+      <div class="taken_slot" style="display:inline" class=form-group></div><p class="time2"><-Represents a taken slot, each timeslot can accomodate up to 6 people </p>
       <select id="soflow" ng-model="interviewDates.selectedOption" ng-options="category.dateText for category in interviewDates.availableOptions"></select>
           <div class="calendar" ng-repeat="schedule in schedules | orderBy:'timeslot'">
               <div class="column">
